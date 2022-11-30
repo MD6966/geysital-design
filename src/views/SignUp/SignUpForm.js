@@ -14,7 +14,6 @@ import ButtonComponent from './components/ButtonComponent'
 import {Box, Button, CircularProgress, Grid, IconButton, InputAdornment, Typography } from '@mui/material'
 import { register } from '../../store/actions/authActions'
 import { useDispatch } from 'react-redux'
-import { useSnackbar } from 'notistack';
 import { Link } from 'react-router-dom'
 const useStyles = makeStyles((theme)=> ({
   icons: {
@@ -73,7 +72,7 @@ const SignUpForm = () => {
         const [showPassword, setShowPassword] = useState(false)
       const [showPassword1, setShowPassword1] = useState(false)
       const dispatch = useDispatch()
-      const {enqueueSnackbar} = useSnackbar()
+      
       const handleShowPassword = () => {
         setShowPassword(!showPassword)
       }
@@ -97,9 +96,6 @@ const SignUpForm = () => {
                 })
                 resetForm({values: ''})
                 console.log(res.res.data.message)
-                enqueueSnackbar( res.res.data.message, {
-                  variant:'success'
-                });
           }
           )
       }

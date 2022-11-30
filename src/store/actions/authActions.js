@@ -22,27 +22,33 @@ export const login = ({email, password},ip) => async(dispatch) =>  {
         body,
         config
       );
+    
       dispatch({
         type: 'LOGIN_SUCCESS',
-        payload: body
+        payload: data.data
       });
       // console.log(data.data)
       dispatch({
         type: 'USER_LOADED',
         payload: data.data
       });
+      
     }
     catch (err) {
             console.log(err)
             dispatch({
-              type: 'AUTH_ERROR'
+              type: 'AUTH_ERROR',
+              message: err.response.data,
+              id: 'LOGIN_FAIL',
+              status: err.response.status
             });
-    }
-
-
+            
     return {
-        type : 'LOGIN_USER'
+     type:'LOGIN_FAIL'
+  }
     }
+
+
 }
 
 export const logout = () => (dispatch) =>
@@ -108,3 +114,22 @@ export const logout = () => (dispatch) =>
           });
   }
   };
+  
+export const auth = () => async (dispatch) => {
+  const config = await makeConfig('Application/json');
+
+  try {
+    const user = await axios.get(
+      `${process.env.REACT_APP_URL}user/auth`,
+      config
+    );
+    dispatch({
+      type: 'USER_LOADED',
+      payload: user.data
+    });
+  } catch (err) {
+    dispatch({
+      type: 'AUTH_ERROR'
+    });
+  }
+};

@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import rootReducer from "./reducers";
+import persistStore from "redux-persist/es/persistStore";
 // import valueReducer from './createSlice'
 // export const store = configureStore({
 //     reducer: {
@@ -12,3 +13,4 @@ export const store = configureStore({
 } 
     
 })
+export const persistor = persistStore(store);

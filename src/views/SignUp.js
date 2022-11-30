@@ -16,12 +16,13 @@ const SignUp = () => {
   const slideImages = [
     {
       url: '/images/5.png',
-      height: '50%',
-      width:'70%'
+      height: '100%',
+      width:'100%'
     },
     {
       url: '/images/geysital.jpg',
       height: '50%',
+      width:'50%'
     },
   ];
 
@@ -73,9 +74,11 @@ const SignUp = () => {
         </Box>
      
       </Box> */}
-    <Box style={{padding:'5rem'}}>
-      <Box>
-      <Card style={{height:'80vh', borderRadius:'20px',}} elevation={5}>
+    <Box >
+      <Box style={{display:'flex', justifyContent:'center', alignItems:'center',}}>
+      <Card style={{height:'80vh', borderRadius:'20px', width:'70%',zIndex:'1', transform:'translate(-50%, -50%)', 
+      position:'absolute', top:'50%', left:'50%', marginTop:'2rem'
+    }} elevation={5}>
       <Grid container>
       <Hidden mdDown>
       <Grid item
@@ -84,22 +87,22 @@ const SignUp = () => {
             md={5}
             lg={5}
             xl={5}
-            
+         
             >
                 
-                <Box style={{backgroundImage:Gradients.indigo, minHeight:'100vh', overflow:'hidden',}}>
+                <Box style={{backgroundImage:Gradients.blue, minHeight:'100vh', overflow:'hidden',}}>
                  <Box style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
                  <Box
-                  style={{height:'100px', width:'100px', backgroundImage:Gradients.orange, borderRadius:'20px',
+                  style={{height:'70px', width:'70px', backgroundImage:Gradients.red, borderRadius:'20px',
                   display:'flex',
                   justifyContent:'center',
                   alignItems:'center'
                 }}
                   >
-                    <LockIcon style={{fontSize:'4rem', color:'#ffffff'}} /> 
+                    <LockIcon style={{fontSize:'3rem', color:'#ffffff'}} /> 
 
                   </Box>
-                  <Typography style={{color:'#ffffff', fontFamily:'Kaushan Script',fontSize:'5rem'}} gutterBottom>
+                  <Typography style={{color:'#2657AA', fontFamily:'Kaushan Script',fontSize:'4rem', textShadow:'2px 2px 5px #ffffff'}} gutterBottom>
                     Sign Up
                   </Typography>
                  
@@ -109,7 +112,7 @@ const SignUp = () => {
                 arrows= {false}
                 >
                   {slideImages.map((slideImage, index)=> (
-            <div className="each-slide" key={index}>
+            <div className="each-slide" key={index} style={{marginTop:'3rem'}}>
                 <img src={slideImage.url} height={slideImage.height} width={slideImage.width} />
             </div>
           ))} 
