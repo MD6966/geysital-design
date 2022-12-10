@@ -11,16 +11,18 @@ import { makeStyles } from '@mui/styles'
 import SelectComponent from './components/SelectComponent'
 import Cities from './components/CitiesData.json'
 import ButtonComponent from './components/ButtonComponent'
-import {Box, Button, CircularProgress, Grid, IconButton, InputAdornment, Typography } from '@mui/material'
+import {Alert, Box, Button, CircularProgress, Grid, IconButton, InputAdornment, Snackbar, Typography } from '@mui/material'
 import { register } from '../../store/actions/authActions'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { useSnackbar } from 'notistack'
 const useStyles = makeStyles((theme)=> ({
   icons: {
     color: '#000000'
   }
 }))
 const SignUpForm = () => {
+  const {enqueueSnackbar} = useSnackbar()
   const classes = useStyles()
     const initialValues = {
         username : "" ,
@@ -79,6 +81,7 @@ const SignUpForm = () => {
       const handleShowPassword1 = () => {
         setShowPassword1(!showPassword1)
       }
+      
   return (
     <div style={{padding:'3rem', }}>
         <Formik
@@ -94,8 +97,12 @@ const SignUpForm = () => {
                   ...Loader,
                   loading : false
                 })
+                enqueueSnackbar(res.res.data.message, {
+                  variant:'success'
+                })
                 resetForm({values: ''})
-                console.log(res.res.data.message)
+                // console.log(res.res.data.message)
+
           }
           )
       }
@@ -155,6 +162,7 @@ const SignUpForm = () => {
             ):
       <ButtonComponent > Register </ButtonComponent>
           }
+        
              <Typography style={{marginTop:'0.5rem',}}>
                 Already have account ? <Link to='/auth/login' style={{textDecoration:'none', letterSpacing:'0px'}}> Login here</Link>
               </Typography>

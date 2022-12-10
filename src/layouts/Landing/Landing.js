@@ -7,9 +7,9 @@ import Page from '../../components/page/page'
 import Nav from '../../components/AppBar/Header'
 import geyserPic from '../../assets/5.png'
 import logo from '../../assets/geysital.jpg'
-import { useSelector } from 'react-redux'
 import Features from '../../views/Features'
 import Contact from '../../views/Contact'
+import { useSelector } from 'react-redux'
 const useStyles = makeStyles((theme) => ({
     root:{
         // padding: theme.spacing(3)
@@ -21,8 +21,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 const Landing = () => {
     const classes = useStyles()
-    const auth = useSelector((state)=> state.auth)
-    
+   
+    const test = useSelector((state)=> state.auth)
+    console.log(test)
   return (
     <Page
     title="Welcome To Website"

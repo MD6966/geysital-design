@@ -3,7 +3,8 @@ const initialState = {
         isLoading: false,
         token : localStorage.getItem('token'),
         isRegistered: null,
-        error: null
+        error: null,
+        user: null, 
 }
 
 const authReducer = (state=initialState, action) => {
@@ -41,15 +42,15 @@ const authReducer = (state=initialState, action) => {
 
             }
         };
-        case 'LOGOUT_SUUCCESS' : {
-            localStorage.removeItem('token')
-            return {
-                token: null,
-                user: null,
-                isAuthenticated: null,
-                isLoading: false
-              };
-        };
+        // case 'LOGOUT_SUUCCESS' : {
+        //     localStorage.removeItem('token')
+        //     return {
+        //         token: null,
+        //         user: null,
+        //         isAuthenticated: null,
+        //         isLoading: false
+        //       };
+        // };
         case 'REGISTER_SUCCESS':
       return {
         ...state,
@@ -59,13 +60,22 @@ const authReducer = (state=initialState, action) => {
       case 'REGISTER_FAIL':
         case 'AUTH_ERROR':
           case 'LOGIN_FAIL':
+            case 'LOGOUT_SUUCCESS' :
         localStorage.removeItem('token');
         return {
           token: null,
           user: null,
           isAuthenticated: false,
           isLoading: false,
-          error:true
+         
+        };
+        case 'USER_PICTURE_UPLOAD' : 
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            profilePic: action.payload
+          }
         };
         default :  return state
         

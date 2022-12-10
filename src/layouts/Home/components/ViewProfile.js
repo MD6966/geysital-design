@@ -1,9 +1,30 @@
-import { Avatar, Box, Button, Card, CardHeader, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, IconButton, TextField, Typography } from '@mui/material'
+import { Avatar, Box, Button, Card, CardActions, CardHeader, Container, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Grid, IconButton, Stack, TextField, Typography } from '@mui/material'
 import React from 'react'
 import PersonIcon from '@mui/icons-material/Person';
 import image from '../../../assets/image.jpg'
-
+import { useSelector, useDispatch } from 'react-redux';
+import { uploadPicture } from '../../../store/actions/userActions';
 const ViewProfile = (props) => {
+  const [picture, setPicture] = React.useState({
+    filename: 'Choose File',
+    file: null
+  })
+  const user = useSelector((state)=> state.auth.user)
+  // console.log(user.profilePic)
+  const dispatch = useDispatch();
+  const handleChange = (e) => {
+  
+    setPicture({
+      filename: e.target.files[0].name,
+      file: e.target.files[0]
+    });
+     
+  }
+  
+  const handleUpload = () => {
+    dispatch(uploadPicture(picture.file, user.id));
+  }
+  // console.log(user)
   return (
     <div>
       <Dialog open ={props.open} onClose={props.close} fullWidth>
@@ -17,27 +38,38 @@ const ViewProfile = (props) => {
         <DialogContent>
             <Box >
               <Card elevation={5} style={{padding: '1rem'}}>
-                <Box style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                  <Avatar style={{height:'100px', width:'100px'}} src={image} /> 
-                  <Box style={{padding:'1rem'}}>
-                  <Typography variant='h4' style={{ fontWeight:'bold'}}> Rubitron Labs</Typography>
-                    <Box style={{paddingTop:'1rem'}}>
-                    <Button> Chose File</Button>
-                    <Button variant='contained'> Upload</Button>
-                    </Box>
-                  </Box>
-                </Box>
+                <Box style={{display:'flex', justifyContent:'center', alignItems:'center'}}>  
+                  <Avatar style={{height:'100px', width:'100px'}} src={`${process.env.REACT_APP_URL}${user.profilePic}`} /> 
+                   </Box>
+                 <Container style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                 <Typography variant='h4' style={{ fontWeight:'bold'}}> {user.name}</Typography>
+                 </Container>
+                 <Box style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                 <CardActions>
+                     <Button>
+                     <label htmlFor='img'>
+                      {picture.filename}
+                     </label>
+                     </Button>
+                      <input id='img' type='file' style={{display:'none'}} onChange={handleChange} />
+                    <Button variant='contained'
+                    onClick={handleUpload}
+                    > Upload</Button>
+                      </CardActions>
+                 </Box>
+                
+
               </Card>
 
               <Card elevation={5} style={{padding: '1rem', marginTop:'1rem'}}>
                 <Typography gutterBottom style={{fontWeight:'bold'}}> Profile </Typography>
                 <Divider />
                 <Grid container style={{marginTop:'1rem'}} spacing={2}>
-                  <Grid item sx={6} sm={6} md={6} lg={6} xl={6}>
-                    <TextField label='Name' fullWidth /> 
+                  <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                    <TextField fullWidth value={user.name} label='Name'/> 
                   </Grid>
-                  <Grid item sx={6} sm={6} md={6} lg={6} xl={6}>
-                  <TextField label='Email' fullWidth />
+                  <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                  <TextField fullWidth value={user.email} label='E-mail'/>
                   </Grid>
                 </Grid> 
               </Card>

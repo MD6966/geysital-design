@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 
 
 export default function Router() {
-    const authState = useSelector((state) => state.rootReducer.auth.isAuthenticated)
+    const authState = useSelector((state) => state.auth.isAuthenticated)
     console.log(authState)
 
     let element = useRoutes([

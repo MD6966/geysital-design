@@ -28,14 +28,14 @@ export const login = ({email, password},ip) => async(dispatch) =>  {
         payload: data.data
       });
       // console.log(data.data)
-      dispatch({
-        type: 'USER_LOADED',
-        payload: data.data
-      });
+      // dispatch({
+      //   type: 'USER_LOADED',
+      //   payload: data.data
+      // });
       
     }
     catch (err) {
-            console.log(err)
+            // console.log(err.response.data)
             dispatch({
               type: 'AUTH_ERROR',
               message: err.response.data,
@@ -44,7 +44,7 @@ export const login = ({email, password},ip) => async(dispatch) =>  {
             });
             
     return {
-     type:'LOGIN_FAIL'
+     err
   }
     }
 
@@ -55,6 +55,7 @@ export const logout = () => (dispatch) =>
   dispatch({
     type: 'LOGOUT_SUUCCESS'
   });
+  
   export const makeConfig = async (type) => {
     const token = await localStorage.getItem('token');
     const config = {
@@ -112,6 +113,9 @@ export const logout = () => (dispatch) =>
             id: 'REGISTER_FAIL',
             status: err.response.status
           });
+        return {
+          err
+        }
   }
   };
   
@@ -133,3 +137,19 @@ export const auth = () => async (dispatch) => {
     });
   }
 };
+
+export const forgetPassword = (value) => async() => {
+  const email = value
+  const body = {
+    email
+  }
+  try {
+      const res = await axios.post(`${process.env.REACT_APP_URL}user/forgotPass`,body)
+      return{
+        res
+      }
+  }
+  catch(err) {
+    console.log(err)
+  }
+}

@@ -4,6 +4,7 @@ const rootReducer = combineReducers({
     auth : authReducer,
 
 
+
 })
 
 export default rootReducer

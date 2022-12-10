@@ -14,6 +14,7 @@ import { Email, Lock, Visibility, VisibilityOff } from '@mui/icons-material';
 import DialogueComponent from './Login/components/DialogueComponent';
 import { useAlert } from 'react-alert'
 import { auth } from '../store/actions';
+import { useSnackbar } from 'notistack';
 const Login = () => {
     const alert = useAlert()
   const dispatch = useDispatch()
@@ -31,17 +32,18 @@ const Login = () => {
     errors: {},
     submitError: null
   });
-  const isAuthenticated = useSelector((state) => state.rootReducer.auth.isAuthenticated)
-  const token = useSelector((state)=>state.rootReducer.auth.token)
-  const error = useSelector((state)=> state.rootReducer)
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
+  const token = useSelector((state)=>state.auth)
+  const error = useSelector((state)=> state.auth)
+  const {enqueueSnackbar} = useSnackbar()
 
-React.useEffect(()=>
-{
-  if(token){
-    dispatch(auth())
-  }
-})
-  const isLoading = useSelector((state) => state.rootReducer.auth.isLoading)
+// React.useEffect(()=>
+// {
+//   if(token){
+//     dispatch(auth())
+//   }
+// })
+  const isLoading = useSelector((state) => state.auth.isLoading)
  
   useEffect(() => {
     axios.get('https://api.ipify.org?format=json').then((data) => {
@@ -62,9 +64,13 @@ React.useEffect(()=>
   }
   const handleSubmit = async (e) => {
       e.preventDefault();
-      await dispatch(login(formValues, ip)).then((res)=> console.log(res.type));
+      await dispatch(login(formValues, ip)).then((res)=>
+      // enqueueSnackbar(res)
+      enqueueSnackbar(res.err.response.data, {
+        variant:'error'
+      })
+      );
       setFormValues(initialValues);
-    
   }
   const handleShowPassword =()=> {
     setShowPassword(!showPassword)
@@ -159,7 +165,6 @@ React.useEffect(()=>
         }}
          
           > Forgot Password?</Typography>
-          <DialogueComponent open={open} close={handleClose} />
           {
             isLoading ? <CircularProgress style={{marginTop:'1rem'}}  /> : 
             <Button 
@@ -170,11 +175,8 @@ React.useEffect(()=>
             }}
             > Login</Button>
           }
-            
-             
-            
-
           </form>
+          <DialogueComponent open={open} close={handleClose} />
           {/* <LoginForm />  */}
         </Box>
         <Box style={{marginTop:'2%',}}>

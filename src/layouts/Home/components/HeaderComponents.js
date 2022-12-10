@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { AppBar, Avatar, Button, Container, Divider, List, ListItem, ListItemIcon, ListItemText, Menu, MenuItem, Typography } from '@mui/material'
-import { useDispatch,   } from 'react-redux'
+import { useDispatch, useSelector,   } from 'react-redux'
 import { logout } from '../../../store/actions'
 import { useNavigate, } from 'react-router'
 import image from '../../../assets/image.jpg'
@@ -24,6 +24,8 @@ const HeaderComponents = () => {
     const [helpDialog, setHelpDialog]= useState(false)
     const [sensorDialog, setSensorDialog]= useState(false)
     const open = Boolean(anchorEl);
+    const user = useSelector((state)=> state.auth.user)
+    // console.log(user)
     const handleSignOut = () => {
         dispatch(logout())
         navigate('/')
@@ -55,27 +57,29 @@ const HeaderComponents = () => {
           setAnchorEl(null)
        }
 
+
+
        
   return (
     <div
         style={{marginLeft:'auto', display:'flex'}}
         >
 
-        <Avatar src={image} onClick={handleAvatarClick} style={{cursor:'pointer'}} /> 
+        <Avatar src={`${process.env.REACT_APP_URL}${user.profilePic}`} onClick={handleAvatarClick} style={{cursor:'pointer'}} /> 
         <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginLeft:'10px'}}>
 
         
-        <span  onClick={handleAvatarClick} style={{cursor:'pointer'}}> Rubitron Labs
+        <span  onClick={handleAvatarClick} style={{cursor:'pointer'}}> {user.name}
         </span>
         <ArrowDropDownIcon /> 
          </div>
          <Menu open={open} onClose={handleClose}
          anchorEl={anchorEl}
-         style={{marginTop:'0.8rem'}}
+         style={{marginTop:'0.8rem',}}
          >
-         <MenuItem >
+         <MenuItem  >
           <Container>
-            <Typography variant='h6' style={{fontWeight:'bold'}}> Rubitron Labs</Typography>
+            <Typography variant='h6' style={{fontWeight:'bold'}}> {user.name}</Typography>
           </Container>
          </MenuItem>
          <Divider style={{margin:'0px 10px'}} /> 
@@ -93,7 +97,7 @@ const HeaderComponents = () => {
           </ListItemIcon>
             <ListItemText> Add Sensor </ListItemText>
           </ListItem>
-          <ListItem disablePadding button  onClick={settingsDialogHandler}style={{paddingLeft:'0.5rem'}}>
+          <ListItem disablePadding button  onClick={settingsDialogHandler}style={{paddingLeft:'0.5rem', marginRight:'2rem'}}>
           <ListItemIcon style={{minWidth: '30px'}}>
             <SettingsIcon /> 
           </ListItemIcon>

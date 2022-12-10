@@ -1,11 +1,13 @@
 import { Button, Typography } from '@mui/material'
 import React from 'react'
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { Outlet } from 'react-router-dom/dist'
 import { HashLink } from 'react-router-hash-link';
 
 const NavBarLinks = () => {
 
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
   return (
     <div>
       <Button variant='standard'
@@ -35,19 +37,34 @@ const NavBarLinks = () => {
       }}> Contact</Typography>
       </HashLink>
       </Button>
-       <Button 
-       sx={{
-        border:'2px solid white',
-        color:'#ffffff',
-        borderRadius:'5px'
-       }}
-      component={Link}
-      to='/auth/login'
-      > 
-      <Typography style={{
-      fontFamily:'Francois One',
-    }}> Login</Typography>
-      </Button>
+      {
+        isAuthenticated ? <Button
+        sx={{
+          border:'2px solid white',
+          color:'#ffffff',
+          borderRadius:'5px'
+         }}
+         component={Link}
+         to='/home'
+        >
+          Go To Dashboard 
+        </Button> :
+        <Button 
+        sx={{
+         border:'2px solid white',
+         color:'#ffffff',
+         borderRadius:'5px'
+        }}
+       component={Link}
+       to='/auth/login'
+       > 
+       <Typography style={{
+       fontFamily:'Francois One',
+     }}> Login</Typography>
+       </Button>
+
+      }
+       
       
     </div>
   )
