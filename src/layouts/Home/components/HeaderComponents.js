@@ -69,9 +69,9 @@ const HeaderComponents = () => {
         <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginLeft:'10px'}}>
 
         
-        <span  onClick={handleAvatarClick} style={{cursor:'pointer'}}> {user.name}
+        <span  onClick={handleAvatarClick} style={{cursor:'pointer', color:'#000'}}> {user.name}
         </span>
-        <ArrowDropDownIcon /> 
+        <ArrowDropDownIcon style={{color:'#000'}} /> 
          </div>
          <Menu open={open} onClose={handleClose}
          anchorEl={anchorEl}

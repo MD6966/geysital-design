@@ -35,7 +35,8 @@ const AddSensor = (props) => {
     }
     else{
       setLoader(true)
-      dispatch(addSensor(formValues, user_id)).then((res)=>{
+      dispatch(addSensor(formValues, user_id)).then((res)=>
+      {
         // console.log(res.res.data.message)
         setLoader(false)
         enqueueSnackbar(res.res.data.message, {

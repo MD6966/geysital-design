@@ -1,4 +1,4 @@
-import { AppBar, Toolbar  ,Typography, Box, Grid, Stack, Divider } from '@mui/material'
+import { AppBar, Toolbar  ,Typography, Box, Grid, Stack, Divider, Button } from '@mui/material'
 import { makeStyles } from '@mui/styles'
 import React from 'react'
 import { Outlet } from 'react-router-dom/dist'
@@ -10,6 +10,8 @@ import logo from '../../assets/geysital.jpg'
 import Features from '../../views/Features'
 import Contact from '../../views/Contact'
 import { useSelector } from 'react-redux'
+import Gradients from '../../Gradients'
+import { Link } from 'react-router-dom'
 const useStyles = makeStyles((theme) => ({
     root:{
         // padding: theme.spacing(3)
@@ -17,20 +19,49 @@ const useStyles = makeStyles((theme) => ({
         height:'100vh',
         marginTop:'-2rem',
       
+    },
+    btn : {
+      marginTop:'3rem', 
+      backgroundColor:'#fff', 
+      color:'#000', 
+      borderRadius:'15px',
+      '&:hover' : {
+        background:'#000',
+        color:'#fff'
+      }
     }
 }))
 const Landing = () => {
     const classes = useStyles()
    
-    const test = useSelector((state)=> state.auth)
-    console.log(test)
+    const user = useSelector((state)=> state.auth.isAuthenticated)
+    console.log(user)
   return (
     <Page
     title="Welcome To Website"
   
     >
-      <Nav />
-      <Grid container   id="landing">
+      <Nav/>
+      <Box id="landing"  style={{height:'100vh', backgroundImage: Gradients.indigo, display:'flex', justifyContent:'center', alignItems:'center'  }}>
+      <Box style={{padding:'6rem'}}>
+
+      <Typography style={{fontSize:'5rem', fontFamily:'Kaushan Script', color:'#fff'}}>
+        Rubitron IoT Dashboard
+      </Typography>
+      <Typography style={{fontSize:'1.05rem', fontfamily:'Francois One', color:'#fff',  }}>
+      A professionally Built dashboard that is developed with one common goal in mind, to help you monitor your 
+      IoT devices with ease.Built with the latest UI / UX technologies. 
+      </Typography>
+      <Button className={classes.btn} variant='contained'
+      component ={Link}
+      to= {user ? '/home' : '/auth/login' }
+      
+      >
+        Get Started Now 
+      </Button>
+      </Box>
+      </Box>
+      {/* <Grid container   id="landing">
         <Grid item
         lg={6}
         xl={6}
@@ -110,8 +141,9 @@ const Landing = () => {
 
       </Grid>
        <Features /> 
-       <Contact /> 
-          
+       <Contact />  */}
+          <Features /> 
+       <Contact />
            
      
 
