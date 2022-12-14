@@ -8,6 +8,11 @@ import RecentAlerts from './RecentAlerts'
 import Gradients from '../../Gradients'
 import logo from '../../assets/rtl-logo.webp'
 import geysital from '../../assets/geysital.jpg'
+import HeaderCard from './DashboardComponents/HeaderCard'
+import TemperatureCard from './DashboardComponents/TemperatureCard'
+import GeyserMode from './DashboardComponents/GeyserMode'
+import RecentAlertsCard from './DashboardComponents/RecentAlertsCard'
+import RoutinesCard from './DashboardComponents/RoutinesCard'
 const drawerWidth = '250px'
 const Dashboard = () => {
   return (
@@ -22,7 +27,7 @@ const Dashboard = () => {
           </Toolbar>
         </AppBar>
        
-        <Box style={{backgroundColor:'#e2e2e2', height:'100vh', padding:'1rem'}}>
+        <Box style={{backgroundColor:'#e2e2e2', height:'100vh', paddingLeft:drawerWidth, padding:'2rem'}}>
           <CssBaseline /> 
           {/* <Grid container spacing={2}>
             <Grid item
@@ -73,7 +78,99 @@ const Dashboard = () => {
             <ModuleList /> 
 
           </Drawer>
+          <Box style={{marginLeft:'15rem'}} >
           <Toolbar /> 
+          
+          <Grid container spacing={2}>
+            <Grid item
+            xs={12}
+            sm={12}
+            md={12}
+            lg={12}
+            xl={12}
+            >
+              <HeaderCard />   
+            </Grid>
+            <Grid item
+            xs={6}
+            sm={6}
+            md={6}
+            lg={6}
+            xl={6}
+            >
+              <Grid container spacing={2}>
+
+                <Grid item
+                xs={6}
+                sm={6}
+                md={6}
+                lg={6}
+                xl={6}
+                >
+                  <TemperatureCard /> 
+                </Grid>
+                <Grid item
+                xs={6}
+                sm={6}
+                md={6}
+                lg={6}
+                xl={6}
+                >
+                <GeyserMode />
+                </Grid>
+                <Grid item
+                xs={12}
+                sm={12}
+                md={12}
+                lg={12}
+                xl={12}
+                >
+                 <RoutinesCard /> 
+                </Grid>
+                
+                  </Grid>
+            </Grid>
+            <Grid item
+            xs={6}
+            sm={6}
+            md={6}
+            lg={6}
+            xl={6}
+            >
+                <RecentAlerts /> 
+            </Grid>
+            {/* <Grid item
+            xs={3}
+            sm={3}
+            md={3}
+            lg={3}
+            xl={3}
+            >
+        <TemperatureCard /> 
+            </Grid>
+            <Grid item
+            xs={3}
+            sm={3}
+            md={3}
+            lg={3}
+            xl={3}
+            >
+        <GeyserMode /> 
+            </Grid>
+            <Grid item
+            xs={6}
+            sm={6}
+            md={6}
+            lg={6}
+            xl={6}
+            >
+        <RecentAlertsCard /> 
+            </Grid> */}
+          
+
+          </Grid>
+          
+          </Box>
           {/* <Grid container>
             <Grid item>
               <Card style={{hieght:'100vh', backgroundColor:'#ffffff'}}>

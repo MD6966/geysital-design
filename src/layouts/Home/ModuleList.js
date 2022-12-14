@@ -3,50 +3,26 @@ import React from 'react'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Gradients from '../../Gradients'
-import axios from 'axios'
-import Hybrid_Geyser_Sensors from '../../store/actions/geyserHybridActions'
+import { get_hybrid_geyser_sensor } from '../../store/actions/Geyser_hybrid_Actions'
+import CircleIcon from '@mui/icons-material/Circle';
 const ModuleList = () => {
-    const ModulesNames =  [
-        {name:'Hybrid Geyser 1' , Temp: '40 °C'},
-        {name:'Hybrid Geyser 2' , Temp: '400 °C'},
-        {name:'Hybrid Geyser 3' , Temp: '4 °C'},
-        {name:'Hybrid Geyser 4' , Temp: '-40 °C'},
-        {name:'Smart Geyser' , Temp: '50 °C'},
-        {name:'Helloi Jee' , Temp: 'Infinite °C'},
-        {name:'Hybrid Geyser 4' , Temp: '-40 °C'},
-        {name:'Smart Geyser' , Temp: '50 °C'},
-        {name:'Hybrid Geyser 4' , Temp: '-40 °C'},
-        {name:'Smart Geyser' , Temp: '50 °C'},
-        {name:'Smart Geyser' , Temp: '50 °C'},
-        {name:'Smart Geyser' , Temp: '50 °C'},
-        {name:'Smart Geyser' , Temp: '50 °C'},
-    ]
     const dispatch = useDispatch()
     const user_id = useSelector((state)=> state.auth.user.id)
-    // React.useEffect(async ()=> {
-    //     try {
-    //         const res = await axios.get(`${process.env.REACT_APP_URL}geyser_hybrid/sensors/${user_id}`)
-    //         console.log(res)
-    //     // dispatch({
-    //     //     type : 'GET_HYBRID_GEYSER_SENSOR',
-    //     //     payload: res.data
-    //     // })
-    //     }
-    //     catch (err) {
-    //         console.log(err)
-    //     }
-    // }, [])
-    const [searchValue, setSearchValue]= useState('')
+    const geyser = useSelector((state)=> state.geyserHybrid.geyser)
+    
     const [state, setState] = React.useState({
         searchValue: '',
         list: []
     })
+    React.useEffect(()=> {
+        dispatch(get_hybrid_geyser_sensor(user_id))
+    }, [])
 
     // console.log(user_id)
 
     const handleChange = (e) => {
-        const results = ModulesNames.filter(val => {
-            if (e.target.value == "") return ModulesNames
+        const results = geyser.filter(val => {
+            if (e.target.value == "") return geyser
             return val.name.toLowerCase().includes(e.target.value.toLowerCase())
         })
         setState({
@@ -57,9 +33,15 @@ const ModuleList = () => {
     }
     React.useEffect(() => {
         setState({
-            list: ModulesNames
+            list: geyser
         })
-    },[])
+    },[geyser])
+    const [selectedIndex, setSelectedIndex] = React.useState(0);
+    const handleClick = (index, e) => {
+            // console.log('===',index)
+            setSelectedIndex(index)
+      
+    }
   return (
     <div>
         <Card style={{height:'7vh' }}>
@@ -76,16 +58,17 @@ const ModuleList = () => {
         <List>
             {
                 
-                !state.list.length  ? 'No results Found! ' : state.list.map(val=> {
+                !state.list.length  ? 'No results Found! ' : state.list.map((val, index)=> {
+                  console.log(val)
                     return (
                         <>
-                        <ListItem button >
-                <ListItemText>
-                    <Typography style={{display:'inline', fontFamily:'Poppins'}}>
-                    {val.name}
+                        <ListItem button onClick={(e) => handleClick(index, e)}  selected={selectedIndex===index}>
+                <ListItemText   >
+                    <Typography style={{display:'inline', fontFamily:'Poppins'}} >
+                    {val.name }
                     </Typography>
                     <Typography style={{float:'right',}}>
-                    {val.Temp}
+                    {val.temperature} °C <CircleIcon style={{color: val.system_status ? 'green' : 'red', fontSize:'1rem'}}/> 
                     </Typography> 
                 </ListItemText>
             </ListItem>
