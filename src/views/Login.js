@@ -15,6 +15,7 @@ import DialogueComponent from './Login/components/DialogueComponent';
 import { useAlert } from 'react-alert'
 import { auth } from '../store/actions';
 import { useSnackbar } from 'notistack';
+import {RotatingLines  } from 'react-loader-spinner'
 const Login = () => {
     const alert = useAlert()
   const dispatch = useDispatch()
@@ -165,8 +166,14 @@ const Login = () => {
         }}
          
           > Forgot Password?</Typography>
+          
           {
-            isLoading ? <CircularProgress style={{marginTop:'1rem'}}  /> : 
+            isLoading ? <RotatingLines
+            strokeColor="blue"
+             strokeWidth="5"
+             animationDuration="0.75"
+              width="50"
+             visible={isLoading}/> : 
             <Button 
             type='submit'
             variant='contained'

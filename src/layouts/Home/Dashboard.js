@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, AppBar, Toolbar, Typography, CssBaseline, Grid, Drawer, Divider, Card } from '@mui/material'
+import { Box, AppBar, Toolbar, Typography, CssBaseline, Grid, Drawer, Divider, Card, TextField, List, ListItem, ListItemText } from '@mui/material'
 import Page from '../../components/page/page'
 import HeaderComponents from './components/HeaderComponents'
 import ModuleList from './ModuleList'
@@ -13,8 +13,63 @@ import TemperatureCard from './DashboardComponents/TemperatureCard'
 import GeyserMode from './DashboardComponents/GeyserMode'
 import RecentAlertsCard from './DashboardComponents/RecentAlertsCard'
 import RoutinesCard from './DashboardComponents/RoutinesCard'
+import { get_hybrid_geyser_sensor } from '../../store/actions/Geyser_hybrid_Actions'
+import { useDispatch, useSelector } from 'react-redux'
+import CircleIcon from '@mui/icons-material/Circle';
+import { Rectangle } from '@mui/icons-material'
+import {RotatingLines  } from 'react-loader-spinner'
 const drawerWidth = '250px'
 const Dashboard = () => {
+  const dispatch = useDispatch()
+
+  React.useLayoutEffect(()=> {
+    dispatch(get_hybrid_geyser_sensor(user_id))
+  }, [])
+  const user_id = useSelector((state)=> state.auth.user.id)
+  const user = useSelector((state)=> state.auth.user)
+  const geyser = useSelector((state)=> state.geyserHybrid.geyser)
+    
+  const [state, setState] = React.useState({
+    searchValue: '',
+    list: []
+})
+const [loader, setLoader]= React.useState(true)
+React.useEffect(()=> {
+    setTimeout(()=> {
+          setLoader(false)
+    },1000)
+}, [])
+
+const handleChange = (e) => {
+  const results = geyser.filter(val => {
+      if (e.target.value == "") return geyser
+      return val.name.toLowerCase().includes(e.target.value.toLowerCase())
+  })
+  setState({
+      searchValue: e.target.value,
+      list: results
+  })
+  
+}
+// console.log(geyser)
+React.useLayoutEffect(() => {
+  setState({
+      list: geyser
+  })
+},[geyser])
+  
+const [selectedIndex, setSelectedIndex] = React.useState(0);
+const [selectedModule, setSelectedModule] = React.useState(0)
+// console.log(selectedModule)
+    const handleClick = (index,val,  e) => {
+            setSelectedIndex(index)
+            // console.log(val)
+            setSelectedModule(index)
+      
+    }
+  //  console.log('Module',geyser[selectedModule])
+  
+   
   return (
     <div>
        <Page
@@ -27,7 +82,7 @@ const Dashboard = () => {
           </Toolbar>
         </AppBar>
        
-        <Box style={{backgroundColor:'#e2e2e2', height:'100vh', paddingLeft:drawerWidth, padding:'2rem'}}>
+        <Box style={{backgroundColor:'#e2e2e2', height:'120vh', paddingLeft:drawerWidth, padding:'2rem', width:'100%'}}>
           <CssBaseline /> 
           {/* <Grid container spacing={2}>
             <Grid item
@@ -75,7 +130,48 @@ const Dashboard = () => {
             <Typography style={{fontFamily:'Kaushan Script', color: '#A4182C', fontSize:'1.75rem'}}> Geysital</Typography> 
             </Box>
             <Divider /> 
-            <ModuleList /> 
+            <Typography style={{color:'#fff', fontSize:'1.5rem', backgroundImage: Gradients.grey}}> Module List </Typography>
+            <Card style={{padding:'1rem'}} elevation={0}>
+            <TextField 
+            name={state.searchValue}
+            value={state.searchValue}
+            onChange={handleChange}
+            fullWidth variant='standard' placeholder='Search Modules Here' />  
+            </Card>
+            <Card style={{height:'60vh', overflow:'scroll'}}>
+        <List>
+          {loader ?  <RotatingLines
+                strokeColor="grey"
+                 strokeWidth="5"
+                 animationDuration="0.75"
+                  width="80"
+                 visible={loader}/> :
+                 !state.list.length  ? 'No results Found! ' : state.list.map((val, index)=> {
+                  // console.log(val)
+                    return (
+                        <>
+                        <ListItem button onClick={(e) => handleClick(index, val, e)}  selected={selectedIndex===index}>
+                <ListItemText   >
+                    <Typography style={{display:'inline', fontFamily:'Poppins'}} >
+                    {val.name }
+                    </Typography>
+                    <Typography style={{float:'right',}}>
+                    {val.temperature} °C <CircleIcon style={{color: val.system_status ? 'green' : 'red', fontSize:'1rem'}}/> 
+                    </Typography> 
+                </ListItemText>
+            </ListItem>
+            <Divider /> 
+                        </>
+                        
+                    )
+                })
+                 
+                 } 
+                </List>
+               
+
+        </Card>
+            {/* <ModuleList />  */}
 
           </Drawer>
           <Box style={{marginLeft:'15rem'}} >
@@ -89,7 +185,7 @@ const Dashboard = () => {
             lg={12}
             xl={12}
             >
-              <HeaderCard />   
+              <HeaderCard module={geyser[selectedModule]}   />   
             </Grid>
             <Grid item
             xs={6}
@@ -107,7 +203,7 @@ const Dashboard = () => {
                 lg={6}
                 xl={6}
                 >
-                  <TemperatureCard /> 
+                  <TemperatureCard module={geyser[selectedModule]} /> 
                 </Grid>
                 <Grid item
                 xs={6}
@@ -116,7 +212,7 @@ const Dashboard = () => {
                 lg={6}
                 xl={6}
                 >
-                <GeyserMode />
+                <GeyserMode module={geyser[selectedModule]} loading={loader}  />
                 </Grid>
                 <Grid item
                 xs={12}
@@ -125,7 +221,7 @@ const Dashboard = () => {
                 lg={12}
                 xl={12}
                 >
-                 <RoutinesCard /> 
+                 <RoutinesCard module={geyser[selectedModule]} loading={loader} /> 
                 </Grid>
                 
                   </Grid>
