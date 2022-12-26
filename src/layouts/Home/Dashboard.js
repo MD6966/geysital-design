@@ -23,7 +23,7 @@ const Dashboard = () => {
   const dispatch = useDispatch()
 
   React.useLayoutEffect(()=> {
-    dispatch(get_hybrid_geyser_sensor(user_id))
+        dispatch(get_hybrid_geyser_sensor(user_id))
   }, [])
   const user_id = useSelector((state)=> state.auth.user.id)
   const user = useSelector((state)=> state.auth.user)
@@ -51,15 +51,16 @@ const handleChange = (e) => {
   })
   
 }
-// console.log(geyser)
+console.log(geyser)
 React.useLayoutEffect(() => {
   setState({
       list: geyser
   })
+
 },[geyser])
   
 const [selectedIndex, setSelectedIndex] = React.useState(0);
-const [selectedModule, setSelectedModule] = React.useState(0)
+const [selectedModule, setSelectedModule] = React.useState(0);
 // console.log(selectedModule)
     const handleClick = (index,val,  e) => {
             setSelectedIndex(index)
@@ -185,7 +186,7 @@ const [selectedModule, setSelectedModule] = React.useState(0)
             lg={12}
             xl={12}
             >
-              <HeaderCard module={geyser[selectedModule]}   />   
+              <HeaderCard   />   
             </Grid>
             <Grid item
             xs={6}

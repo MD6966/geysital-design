@@ -16,6 +16,7 @@ import { register } from '../../store/actions/authActions'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useSnackbar } from 'notistack'
+import {RotatingLines  } from 'react-loader-spinner'
 const useStyles = makeStyles((theme)=> ({
   icons: {
     color: '#000000'
@@ -156,8 +157,14 @@ const SignUpForm = () => {
         </Grid>
           {
             Loader.loading ? (
-              <Box>
-                <CircularProgress color='primary' size='2rem' />
+              <Box sx={{mt:'2rem'}}>
+              <RotatingLines 
+              strokeColor="blue"
+              strokeWidth="5"
+              animationDuration="0.75"
+              width="50"
+              visible={true}
+              />
               </Box>
             ):
       <ButtonComponent > Register </ButtonComponent>

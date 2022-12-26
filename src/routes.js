@@ -7,6 +7,7 @@ import SignUp from "./views/SignUp";
 import Dashboard from './layouts/Home/Dashboard'
 import ProtectedRoutes from "./ProtectedRoutes";
 import { useSelector } from "react-redux";
+import ErrorPage from "./ErrorBoundary/components/ErrorPage";
 
 
 
@@ -34,6 +35,10 @@ export default function Router() {
             {path:'dashboard', element: <Dashboard /> }
             
         ]
+       },
+       {
+        path:'error',
+        element: <ErrorPage />
        }
        
     ])
