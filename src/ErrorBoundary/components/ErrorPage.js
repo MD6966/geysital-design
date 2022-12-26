@@ -17,6 +17,12 @@ const useStyles = makeStyles((theme)=> ({
         fontWeight:'bold',
         fontSize:'15px',
         marginTop:'3rem',
+        height:'30px',
+        textDecoration:'none',
+        color:'#fff',
+        display:'flex',
+        alignItems:'center',
+        justifyContent:'center',
         '&:hover' : {
             background: '#962525'
         }
@@ -42,9 +48,9 @@ const ErrorPage = () => {
         <Typography sx={{fontWeight:'bold',}}> We're sorry. the page you requested could not be found at the moment </Typography>
         <div style={{display:'flex', justifyContent:'center'}}>
 
-        <Button variant='contained' className={classes.btn} component={Link} href='/'> 
+        <a variant='contained' className={classes.btn} component={Link} href='/'> 
             Go Home 
-        </Button>
+        </a>
         </div>
        
         </Stack>

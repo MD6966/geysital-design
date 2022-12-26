@@ -4,7 +4,7 @@ import React from 'react'
 const RecentAlerts = () => {
   return (
     <div>
-      <Card style={{height:'80vh'}}>
+      <Card style={{height:'105vh'}}>
         Recent Alerts 
       </Card>
     </div>

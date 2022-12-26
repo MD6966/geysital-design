@@ -1,18 +1,42 @@
-import { Card, Box } from '@mui/material'
+import { Card, Box, CardHeader, Typography, AppBar, Toolbar, Tabs, Tab } from '@mui/material'
+import { useTheme } from '@mui/styles'
 import React from 'react'
+import SwipeableViews from 'react-swipeable-views'
 import bg from '../../../assets/tech.jpg'
-
+import Settings from './Settings'
+import Routines from './Routines'
 const RoutinesCard = () => {
+  const [value ,setValue] = React.useState(0)
+  const handleTabsChange =(e, value)=> {
+      setValue(value)
+  }
+  const theme = useTheme()
   return (
     <div>
-      <Card style={{height:'50vh', backgroundImage:`url(${bg})`, 
-      backgroundRepeat:'no-repeat', backgroundSize:'cover',}}>
-        <Box style={{height:'100%', backgroundColor:'rgba(255,255,255,0.6)', display:'flex', alignItems:'center', justifyContent:'center'}}>
-      hi
-        </Box>
+      <AppBar position='static' sx={{bgcolor:'#fff'}}>
+            <Toolbar>
+              <Tabs 
+              centered
+              value={value}
+              onChange={handleTabsChange}
+              >
+                <Tab label='Settings' />
+                <Tab label='Routines' />
+              </Tabs>
+            </Toolbar>
+          </AppBar>
+      <Card sx={{height:'65vh'}}>
+        <SwipeableViews
+         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+         index={value}
+        >
+                {value ===  0 && <Settings />}
+                {value ===  1 && <Routines />}
+        </SwipeableViews>
       </Card>
     </div>
   )
 }
 
 export default RoutinesCard
+ 

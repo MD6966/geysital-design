@@ -8,7 +8,7 @@ import Dashboard from './layouts/Home/Dashboard'
 import ProtectedRoutes from "./ProtectedRoutes";
 import { useSelector } from "react-redux";
 import ErrorPage from "./ErrorBoundary/components/ErrorPage";
-
+import { Navigate } from "react-router-dom/dist";
 
 
 export default function Router() {
@@ -32,14 +32,17 @@ export default function Router() {
         element : <ProtectedRoutes isLogged={authState} />,
         children: [
             {path:'home', element: <Home />},
-            {path:'dashboard', element: <Dashboard /> }
+            {path:'dashboard', element: <Dashboard /> },
+            {
+                element: () => <Navigate to='/error' /> 
+               }
             
         ]
        },
-       {
+      {
         path:'error',
-        element: <ErrorPage />
-       }
+        element: <ErrorPage /> 
+      }
        
     ])
     return element

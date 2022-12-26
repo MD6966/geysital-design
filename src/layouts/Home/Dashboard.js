@@ -83,7 +83,7 @@ const [selectedModule, setSelectedModule] = React.useState(0);
           </Toolbar>
         </AppBar>
        
-        <Box style={{backgroundColor:'#e2e2e2', height:'120vh', paddingLeft:drawerWidth, padding:'2rem', width:'100%'}}>
+        <Box style={{backgroundColor:'#e2e2e2', height:'150vh', paddingLeft:drawerWidth, padding:'2rem', width:'100%'}}>
           <CssBaseline /> 
           {/* <Grid container spacing={2}>
             <Grid item
@@ -186,7 +186,7 @@ const [selectedModule, setSelectedModule] = React.useState(0);
             lg={12}
             xl={12}
             >
-              <HeaderCard   />   
+              <HeaderCard module={geyser[selectedModule]}   />   
             </Grid>
             <Grid item
             xs={6}

@@ -71,7 +71,7 @@ const HeaderComponents = () => {
         
         <span  onClick={handleAvatarClick} style={{cursor:'pointer', color:'#000'}}> {user.name}
         </span>
-        <ArrowDropDownIcon style={{color:'#000'}} /> 
+        <ArrowDropDownIcon style={{color:'#000',cursor:'pointer',}} onClick={handleAvatarClick} /> 
          </div>
          <Menu open={open} onClose={handleClose}
          anchorEl={anchorEl}
