@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { AppBar, Avatar, Button, Container, Divider, List, ListItem, ListItemIcon, ListItemText, Menu, MenuItem, Typography } from '@mui/material'
+import { AppBar, Avatar, Button, Container, Divider, IconButton, List, ListItem, ListItemIcon, ListItemText, Menu, MenuItem, Typography } from '@mui/material'
 import { useDispatch, useSelector,   } from 'react-redux'
 import { logout } from '../../../store/actions'
 import { useNavigate, } from 'react-router'
@@ -14,7 +14,7 @@ import Settings from './Settings'
 import HelpCenter from './HelpCenter'
 import AddIcon from '@mui/icons-material/Add';
 import AddSensor from './AddSensor'
-
+import NotificationsIcon from '@mui/icons-material/Notifications';
 const HeaderComponents = () => {
     const dispatch = useDispatch()
     const navigate  = useNavigate()
@@ -64,7 +64,9 @@ const HeaderComponents = () => {
     <div
         style={{marginLeft:'auto', display:'flex'}}
         >
-
+          <IconButton sx={{mr:'2rem'}}>
+        <NotificationsIcon  /> 
+          </IconButton>
         <Avatar src={`${process.env.REACT_APP_URL}${user.profilePic}`} onClick={handleAvatarClick} style={{cursor:'pointer'}} /> 
         <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginLeft:'10px'}}>
 

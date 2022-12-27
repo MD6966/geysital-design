@@ -12,7 +12,7 @@ const RoutinesCard = () => {
   }
   const theme = useTheme()
   return (
-    <div>
+    <div style={{overflowY:'visible'}}>
       <AppBar position='static' sx={{bgcolor:'#fff'}}>
             <Toolbar>
               <Tabs 
@@ -25,7 +25,7 @@ const RoutinesCard = () => {
               </Tabs>
             </Toolbar>
           </AppBar>
-      <Card sx={{height:'65vh'}}>
+      <Card sx={{height:'65vh', overflow:'scroll'}}>
         <SwipeableViews
          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
          index={value}
