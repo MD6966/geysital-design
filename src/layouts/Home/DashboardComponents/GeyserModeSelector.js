@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Typography, Button, Stack } from '@mui/material'
+import { Card, Typography, Button, Stack, ButtonGroup } from '@mui/material'
 const GeyserModeSelector = () => {
   return (
     <div>
@@ -14,15 +14,19 @@ const GeyserModeSelector = () => {
       }}
     >
       <Stack>
-        <Typography>Temperature (Lower Threshold)</Typography>
+        <Typography>Geyser Mode</Typography>
         <Typography style={{ fontSize: "2rem", fontWeight: 800 }}>
-          30 °C
+          Gas 
         </Typography>
       </Stack>
-
-      <Button variant="outlined" sx={{ height: "2rem" }}>
+        <ButtonGroup variant='outlined' sx={{height:'40px', mt:'1rem'}}>
+        <Button> Gas</Button>
+        <Button> Hybrid</Button>
+        <Button> Electric</Button>
+        </ButtonGroup>
+      {/* <Button variant="outlined" sx={{ height: "2rem" }}>
         Set Threshold
-      </Button>
+      </Button> */}
     </Card>
   </div>
   )
