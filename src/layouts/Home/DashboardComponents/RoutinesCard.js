@@ -5,7 +5,8 @@ import SwipeableViews from 'react-swipeable-views'
 import bg from '../../../assets/tech.jpg'
 import Settings from './Settings'
 import Routines from './Routines'
-const RoutinesCard = () => {
+const RoutinesCard = (props) => {
+  const {module} = props
   const [value ,setValue] = React.useState(0)
   const handleTabsChange =(e, value)=> {
       setValue(value)
@@ -30,8 +31,8 @@ const RoutinesCard = () => {
          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
          index={value}
         >
-                {value ===  0 && <Settings />}
-                {value ===  1 && <Routines />}
+                {value ===  0 && <Settings module={module} />}
+                {value ===  1 && <Routines module={module} />}
         </SwipeableViews>
       </Card>
     </div>

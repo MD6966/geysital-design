@@ -28,7 +28,6 @@ const Dashboard = () => {
   const user_id = useSelector((state)=> state.auth.user.id)
   const user = useSelector((state)=> state.auth.user)
   const geyser = useSelector((state)=> state.geyserHybrid.geyser)
-    
   const [state, setState] = React.useState({
     searchValue: '',
     list: []
@@ -51,7 +50,7 @@ const handleChange = (e) => {
   })
   
 }
-console.log(geyser)
+// console.log(geyser)
 React.useLayoutEffect(() => {
   setState({
       list: geyser

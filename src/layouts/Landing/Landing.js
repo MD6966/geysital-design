@@ -35,7 +35,7 @@ const Landing = () => {
     const classes = useStyles()
    
     const user = useSelector((state)=> state.auth.isAuthenticated)
-    console.log(user)
+    // console.log(user)
   return (
     <Page
     title="Welcome To Website"

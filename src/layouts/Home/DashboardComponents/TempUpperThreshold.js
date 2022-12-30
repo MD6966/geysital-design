@@ -11,6 +11,9 @@ InputLabel,
 Select
 } from '@mui/material'
 import { makeStyles } from "@mui/styles";
+import { Animated } from 'react-animated-css';
+import { useDispatch } from 'react-redux';
+import { setThreshold } from '../../../store/actions/Geyser_hybrid_Actions';
 const useStyles = makeStyles((theme) => ({
     root: {
       marginLeft: theme.spacing(2),
@@ -24,10 +27,24 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
   }));
-const TempUpperThreshold = () => {
-    const classes = useStyles()
+const TempUpperThreshold = (props) => {
+  const classes = useStyles()
+    const {module} = props   
+    const [animate, toggleAnimate] = React.useState(true);
+    const [t, setT] = React.useState(null);
     const [dialogOpen, setDialog] = React.useState(false)
     const [value, setValue] = React.useState(null);
+    const id = module.user_ids[0]
+    const type = 'temp_upperthreshold'
+    // console.log(id)
+    const dispatch = useDispatch()
+    React.useEffect(() => {
+      toggleAnimate(false);
+      setTimeout(() => {
+        toggleAnimate(true);
+        setT(module.temp_upperthreshold);
+      }, 500);
+    }, [module.temp_upperthreshold]);
     const handleDialogOpen =() => {
         setDialog(true)
     }
@@ -41,6 +58,10 @@ const TempUpperThreshold = () => {
         setDialog(false)
       };
       const handleSubmit = () => {
+        // console.log(value)
+        if (value !== null && value !== undefined) {
+              dispatch(setThreshold(id, type, value))
+        }
         setDialog(false)
       }
   return (
@@ -57,9 +78,18 @@ const TempUpperThreshold = () => {
     >
       <Stack>
         <Typography>Temperature (Upper Threshold)</Typography>
-        <Typography style={{ fontSize: "2rem", fontWeight: 800 }}>
-          50 °C
-        </Typography>
+        <Animated
+            animationIn="bounceIn"
+            animationInDuration={400}
+            animationOut="fadeOut"
+            animationOutDuration={400}
+            isVisible={animate}
+          >
+            <Typography
+             style={{ fontSize: "2rem", fontWeight: 800 }}
+            >{t} °C
+            </Typography>
+          </Animated>
       </Stack>
 
       <Button variant="outlined" sx={{ height: "2rem" }} onClick={handleDialogOpen}>

@@ -4,7 +4,7 @@ import bg from '../../../assets/tech.jpg'
 import {Animated} from "react-animated-css";
 const HeaderCard = (props) => {
   const {module} = props
-  console.log(module)
+  // console.log(module)
   const [animate, toggleAnimate] = React.useState(true);
   const [s, setS] = React.useState()
   const [v, setV] = React.useState()
